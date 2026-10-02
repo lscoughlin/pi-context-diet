@@ -1,0 +1,39 @@
+{
+  "enabled": true,
+
+  "//thresholds": "Outputs at or below minTokens stay raw. Outputs above maxSourceChars stay raw too (caps helper cost).",
+  "minTokens": 3500,
+  "maxSourceChars": 200000,
+
+  "//replacement": "A replacement is only accepted if it is <= maxSummaryTokens AND at least minSaving smaller than the original.",
+  "maxSummaryTokens": 1800,
+  "minSaving": 0.3,
+  "helperTimeoutMs": 90000,
+
+  "//helperModels": "Tried cheapest-first; the first model with configured credentials wins. Ids must exist verbatim in ~/.pi/agent/models-store.json — an unresolvable entry is silently skipped, which is why /context-diet status prints every entry's resolve status. Haiku is deliberately absent: it fabricates file names and citations on this task.",
+  "helperModels": [
+    ["openrouter", "~deepseek/deepseek-flash-latest"],
+    ["openrouter", "~deepseek/deepseek-v4-flash-latest"],
+    ["openrouter", "~z-ai/glm-flash-latest"],
+    ["openrouter", "~openai/gpt-luna-latest"]
+  ],
+
+  "//exemptTools": "Never compressed — the model needs the real bytes to edit anything.",
+  "exemptTools": ["read", "edit", "write", "powershell"],
+
+  "//bashAllow": "Bash is eligible only when the command matches one of these regexes, exits 0, and prints nothing on stderr. MCP tool results are always eligible. Add your own MCP tool names to exemptTools to exclude them.",
+  "bashAllow": [
+    "^\\s*(rg|grep|find|fd)\\b",
+    "^\\s*git\\s+(log|status|diff --stat|show --stat)\\b",
+    "^\\s*(pytest|jest|vitest)\\b",
+    "^\\s*npm\\s+(run\\s+)?(test|build|lint)\\b",
+    "^\\s*(mvn|gradle|\\./mvnw|\\./gradlew)\\b",
+    "^\\s*(kubectl|docker)\\s+logs\\b",
+    "^\\s*curl\\b"
+  ],
+
+  "//secret": "If this matches the output OR the tool arguments, the result is left raw.",
+  "secret": "(api[_-]?key|secret|password|passwd|bearer\\s|BEGIN [A-Z ]*PRIVATE KEY|authorization:)",
+
+  "archiveDir": "~/.cache/pi-context-diet/raw"
+}

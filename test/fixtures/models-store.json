@@ -1,0 +1,11 @@
+{
+  "openrouter": {
+    "models": [
+      { "id": "~deepseek/deepseek-flash-latest", "name": "DeepSeek Flash", "cost": { "input": 0.0243, "output": 0.6 } },
+      { "id": "~deepseek/deepseek-v4-flash-latest", "name": "DeepSeek V4 Flash", "cost": { "input": 0.0108, "output": 1.28 } },
+      { "id": "~z-ai/glm-flash-latest", "name": "GLM Flash", "cost": { "input": 0.02, "output": 0.3 } },
+      { "id": "~openai/gpt-luna-latest", "name": "GPT Luna", "cost": { "input": 0.1, "output": 0.5 } },
+      { "id": "~acme/pricey-frontier", "name": "Pricey Frontier", "cost": { "input": 3.0, "output": 15.0 } }
+    ]
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "name": "pi-context-diet",
+  "version": "0.1.0",
+  "description": "Archive large discovery tool outputs and replace them with a cheap model's fact list, so a Pi session keeps its working room.",
+  "keywords": [
+    "pi-package",
+    "pi",
+    "context",
+    "compression",
+    "tokens"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "pi": {
+    "extensions": [
+      "./src/context-diet/index.ts"
+    ]
+  },
+  "scripts": {
+    "test": "node test/selftest.mjs",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-ai": "*",
+    "@earendil-works/pi-coding-agent": "*"
+  },
+  "devDependencies": {
+    "@earendil-works/pi-ai": ">=0.99.0",
+    "@earendil-works/pi-coding-agent": ">=0.99.0",
+    "@types/node": "^22.0.0",
+    "typescript": "^5.6.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lscoughlin/pi-context-diet.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lscoughlin/pi-context-diet/issues"
+  },
+  "homepage": "https://github.com/lscoughlin/pi-context-diet#readme"
+}
