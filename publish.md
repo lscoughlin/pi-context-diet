@@ -3,9 +3,10 @@
 Repo: `/Users/liamcoughlin/Source/lscoughlin/pi-context-diet`
 Current version: `0.1.1`
 
-The package is **not on the registry yet** (verified: `404`). An earlier
-attempt from inside `pi` got as far as an `EOTP` and stalled, so the published
-state is unknown until step 3 confirms it.
+**Status: published.** `npm view @lscoughlin/pi-context-diet version dist-tags`
+returns `0.1.1` / `latest: 0.1.1`, and the package is installed on this machine
+via `pi install npm:@lscoughlin/pi-context-diet`. What follows is retained as a
+record of the hand-run 2FA flow for the next release.
 
 ---
 
@@ -68,14 +69,19 @@ Expect `0.1.1`. To confirm against the registry directly:
 curl -s https://registry.npmjs.org/@lscoughlin/pi-context-diet | head -c 200
 ```
 
-## 4. Install locally (optional — retire the dev copy first)
+## 4. Install locally (done — kept for reference)
 
-`~/.pi/agent/extensions/context-diet` still exists. Installing the packaged
-version on top of it would register `/context-diet` **twice** and they would
-share one config file, so the command would appear twice in the palette.
+`~/.pi/agent/extensions/context-diet` now contains only `config.json`; the code
+comes from the package. The old dev copy lives at
+`~/.pi/agent/context-diet.dev-copy` — note it is parked **outside** the
+extensions tree, because Pi auto-discovers any non-dot-prefixed directory
+there and would otherwise register `/context-diet` a second time.
 
 ```bash
-mv ~/.pi/agent/extensions/context-diet ~/.pi/agent/extensions/context-diet.disabled
+# one-time switch (already performed)
+mv ~/.pi/agent/extensions/context-diet ~/.pi/agent/context-diet.dev-copy
+mkdir -p ~/.pi/agent/extensions/context-diet
+cp <saved config.json> ~/.pi/agent/extensions/context-diet/config.json
 pi install npm:@lscoughlin/pi-context-diet
 ```
 
@@ -84,7 +90,7 @@ Then **restart `pi`** — extension discovery happens at startup only.
 If a later version is published, refresh with:
 
 ```bash
-pi install npm:@lscoughlin/pi-context-diet
+pi install npm:@lscoughlin/pi-context-diet@<version>
 ```
 
 ---
@@ -112,8 +118,9 @@ pi install npm:@lscoughlin/pi-context-diet
 
 ## Checklist
 
-- [ ] `npm whoami` returns `lscoughlin`
-- [ ] `npm publish --access public` run in a real terminal, 2FA approved
-- [ ] `npm view @lscoughlin/pi-context-diet version` prints `0.1.1`
-- [ ] dev copy at `~/.pi/agent/extensions/context-diet` retired (if installing)
+- [x] `npm whoami` returns `lscoughlin`
+- [x] `npm publish --access public` run in a real terminal, 2FA approved
+- [x] `npm view @lscoughlin/pi-context-diet version` prints `0.1.1`
+- [x] dev copy retired to `~/.pi/agent/context-diet.dev-copy` (outside discovery)
+- [x] `pi install npm:@lscoughlin/pi-context-diet` run; `pi list` shows one entry
 - [ ] `pi` restarted
