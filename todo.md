@@ -2,17 +2,8 @@
 
 ## Publish
 
-No git remote exists yet — the repo is committed locally at `a9296f7` with tag
-`v0.1.0`, but nothing has been pushed.
-
-```bash
-cd ~/Source/lscoughlin/pi-context-diet
-git remote add origin git@github.com:lscoughlin/pi-context-diet.git
-git push -u origin main --tags
-```
-
-The `v0.1.0` tag already exists locally, so `--tags` ships the pin that the
-install command below references.
+✅ Done — public repo at <https://github.com/lscoughlin/pi-context-diet>, `main`
+and tag `v0.1.0` pushed.
 
 ## Install without double-loading
 
