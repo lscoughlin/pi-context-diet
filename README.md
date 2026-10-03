@@ -15,7 +15,8 @@ anything that looks like a credential pass through untouched.
 ```
 
 This is a Pi port of the `PostToolUse` technique in
-["Claude Context Diet"](https://claude.ai/artifact/9Ud9iisBP4AzuxbKbcjDyw). Same
+["Claude Context Diet"](https://claude.ai/artifact/9Ud9iisBP4AzuxbKbcjDyw)
+([archived copy](claude-context-diet.md), in case the artifact expires). Same
 policy and guardrails, expressed as Pi's `tool_result` hook instead of a
 `settings.json` hook chain.
 

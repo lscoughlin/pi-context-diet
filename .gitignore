@@ -6,3 +6,7 @@ dist/
 config.json
 *.log
 .DS_Store
+
+# Editor swap files
+*.swp
+*.swo
