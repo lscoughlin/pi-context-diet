@@ -5,6 +5,10 @@
 ✅ Done — public repo at <https://github.com/lscoughlin/pi-context-diet>, `main`
 and tag `v0.1.0` pushed.
 
+⚠️ **npm publish for 0.1.1 is NOT done** — the registry still returns 404. See
+[`publish.md`](./publish.md) for the hand-run steps (it needs an interactive 2FA
+challenge in a real terminal).
+
 ## Install without double-loading
 
 ⚠️ **Do not run `pi install` while the global dev copy is still in place.** Both
