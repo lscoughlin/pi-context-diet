@@ -2,6 +2,12 @@
 
 Notable changes, newest first. This project follows [Semantic Versioning](https://semver.org).
 
+## 0.1.1
+
+- Published to npm as `@lscoughlin/pi-context-diet` (public), so it is
+  installable with `pi install npm:@lscoughlin/pi-context-diet` and listed in
+  the Pi package gallery.
+
 ## 0.1.0
 
 Initial release.

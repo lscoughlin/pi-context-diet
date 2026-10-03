@@ -1,6 +1,9 @@
 {
-  "name": "pi-context-diet",
-  "version": "0.1.0",
+  "name": "@lscoughlin/pi-context-diet",
+  "version": "0.1.1",
+  "publishConfig": {
+    "access": "public"
+  },
   "description": "Archive large discovery tool outputs and replace them with a cheap model's fact list, so a Pi session keeps its working room.",
   "keywords": [
     "pi-package",
