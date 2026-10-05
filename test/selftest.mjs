@@ -29,6 +29,66 @@ const check = (name, ok, detail = "") => {
 	if (!ok) failures++
 }
 
+// ---------------------------------------------------------------------------
+// Runtime-floor guard
+// ---------------------------------------------------------------------------
+// The repo must never advertise support for an older Node than the Pi packages
+// it is built against. `engines.node` and the `@types/node` major are held to
+// the *pinned* devDependency floors, read by direct path from REPO_ROOT — never
+// via findPiPackage(), which in an interactive shell resolves the user's global
+// Pi rather than the version this lockfile pins. A floor check run only by hand
+// drifts; this one gates `npm test` and therefore CI.
+
+/** `>=x.y.z` (the form both Pi packages use); null — and so a failed check — for
+ * anything else, so a future exotic range fails loudly instead of passing.
+ */
+const FLOOR = /^>=\s*(\d+)\.(\d+)\.(\d+)/
+function nodeFloor(range) {
+	const m = FLOOR.exec((range ?? "").trim())
+	return m ? m.slice(1).map(Number) : null
+}
+
+/** Compare [major, minor, patch] triples: negative, zero, positive. */
+function verCmp(a, b) {
+	for (let i = 0; i < 3; i++) {
+		if (a[i] !== b[i]) return a[i] - b[i]
+	}
+	return 0
+}
+
+/** Leading major of a range such as `^22.20.5`. */
+function majorOf(range) {
+	const m = /\d+/.exec(range ?? "")
+	return m ? Number(m[0]) : null
+}
+
+const repoPkg = JSON.parse(await readFile(join(REPO_ROOT, "package.json"), "utf8"))
+const peerPkgs = Object.fromEntries(
+	await Promise.all(
+		["pi-ai", "pi-coding-agent"].map(async (name) => [
+			name,
+			JSON.parse(
+				await readFile(join(REPO_ROOT, "node_modules", "@earendil-works", name, "package.json"), "utf8"),
+			),
+		]),
+	),
+)
+
+const repoFloor = nodeFloor(repoPkg.engines?.node)
+for (const [name, pkg] of Object.entries(peerPkgs)) {
+	const peerFloor = nodeFloor(pkg.engines?.node)
+	check(
+		`engines.node >= ${name} floor`,
+		repoFloor !== null && peerFloor !== null && verCmp(repoFloor, peerFloor) >= 0,
+		`repo ${repoPkg.engines?.node} vs ${name} ${pkg.engines?.node}`,
+	)
+}
+check(
+	"@types/node major matches engine floor",
+	repoFloor !== null && majorOf(repoPkg.devDependencies?.["@types/node"]) === repoFloor[0],
+	`@types/node ${repoPkg.devDependencies?.["@types/node"]} vs engines ${repoPkg.engines?.node}`,
+)
+
 /** A context that records notifications and replays a scripted menu. */
 function makeCtx(notices = [], selectQueue = []) {
 	return {
